@@ -50,7 +50,7 @@ def stretch(picture, ratio, in_log=False):
 
 
 def make_pptx(images_dir_path, labels_path, output_file_path,
-              target_long_edge_len=500):
+              in_log=True, target_long_edge_len=500):
     prs = pptx.Presentation()
     slide_layout = prs.slide_layouts[5]  # title only layout
 
@@ -61,7 +61,7 @@ def make_pptx(images_dir_path, labels_path, output_file_path,
         title_box.text = str(i + 1)
 
         picture = slide.shapes.add_picture(image_path, 0, 0)
-        stretch(picture, ratio, in_log=True)
+        stretch(picture, ratio, in_log=in_log)
 
         actua_long_edge_len = max(picture.height, picture.width)
         scale = px_to_emu(target_long_edge_len) / float(actua_long_edge_len)
@@ -77,7 +77,8 @@ if __name__ == '__main__':
     images_dir_path = 'images'
     labels_path = 'labels.txt'
     output_file_path = 'make_pptx.pptx'
+    in_log = True
     target_long_edge_len = 500  # in px
 
-    make_pptx(images_dir_path, labels_path, output_file_path,
+    make_pptx(images_dir_path, labels_path, output_file_path, in_log,
               target_long_edge_len)
